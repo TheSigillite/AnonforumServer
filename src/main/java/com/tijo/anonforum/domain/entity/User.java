@@ -1,7 +1,9 @@
 package com.tijo.anonforum.domain.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,12 +11,13 @@ import java.io.Serializable;
 @Entity
 @Table(name = "useraccounts")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class User implements Serializable {
 
     @Id
     @Column(name = "acc_id")
-    @GeneratedValue
     private Long acc_id;
 
     @Column(name = "login")
@@ -26,5 +29,4 @@ public class User implements Serializable {
     @Column(name = "is_adm")
     private Boolean is_adm;
 
-    public User(){}
 }

@@ -23,7 +23,8 @@ public class MovieDTO implements Serializable {
     @ApiModelProperty(notes = "Data premiery")
     private Integer premiere;
 
-    public MovieDTO(){
-
+    public static MovieDTOBuilder movieDTOBuilder(){
+        return builder();
     }
+
 }

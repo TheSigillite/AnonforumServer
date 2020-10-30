@@ -1,7 +1,9 @@
 package com.tijo.anonforum.domain.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,12 +11,13 @@ import java.io.Serializable;
 @Entity
 @Table(name = "movies")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Movie implements Serializable {
 
     @Id
     @Column(name = "movie_id")
-    @GeneratedValue
     private Long movie_id;
 
     @Column(name = "title")
@@ -28,8 +31,5 @@ public class Movie implements Serializable {
 
     @Column(name = "premiere")
     private Integer premiere;
-
-    public Movie() {
-    }
 
 }
