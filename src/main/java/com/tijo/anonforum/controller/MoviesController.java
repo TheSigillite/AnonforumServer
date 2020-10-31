@@ -48,7 +48,7 @@ public class MoviesController {
         }
     }
 
-    @ApiOperation(value = "Edytuje istniejący film",notes = "Metoda weryfikuje czy edytujący ma uprawnienia", response = ResponseDto.class)
+    @ApiOperation(value = "Edytuje istniejący film",notes = "Metoda weryfikuje czy edytujący ma uprawnienia", response = ResponseDTO.class)
     @CrossOrigin
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ResponseDTO> updateMovie(

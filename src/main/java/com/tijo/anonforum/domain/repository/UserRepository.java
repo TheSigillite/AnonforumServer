@@ -1,6 +1,7 @@
 package com.tijo.anonforum.domain.repository;
 
 import com.tijo.anonforum.domain.entity.User;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +11,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@Transactional
+@Transactional()
+@Profile("!test")
 public interface UserRepository extends JpaRepository<User,Long>, CrudRepository<User,Long> {
     @Query(value = "SELECT * FROM useraccounts u WHERE u.login = ?1 AND u.passwd = ?2", nativeQuery = true)
     User findUserByLoginAndPasswd(String login, String passwd);

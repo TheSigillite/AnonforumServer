@@ -1,6 +1,7 @@
 package com.tijo.anonforum.domain.repository;
 
 import com.tijo.anonforum.domain.entity.Movie;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional()
+@Profile("!test")
 public interface MovieRepository extends JpaRepository<Movie,Long>, CrudRepository<Movie,Long> {
     @Modifying
     @Query(value = "insert into movies(title,cover,director,premiere) values (:title, :cover, :director, :premiere)", nativeQuery = true)
