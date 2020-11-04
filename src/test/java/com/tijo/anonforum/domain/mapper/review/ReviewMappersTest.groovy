@@ -1,4 +1,4 @@
-package com.tijo.anonforum.domain.mapper.movie
+package com.tijo.anonforum.domain.mapper.review
 
 import com.tijo.anonforum.domain.dto.review.NewReviewDTO
 import com.tijo.anonforum.domain.dto.review.ReviewDTO
@@ -44,11 +44,10 @@ class ReviewMappersTest extends Specification{
         given:
             Review review = new Review(1,1,1,"This is a review")
             User user = new User(1,"Test1","Test1",false)
-            ReviewDTO reviewDTO = ReviewDTO.builder().login("Test1").movie_id(1).rev("This is a review").rev_id(1).build()
         when:
-            def out = reviewDTOMapper.convert(review,user)
+            ReviewDTO out1 = reviewDTOMapper.convert(review,user)
         then:
-            out == reviewDTO
+        out1 == new ReviewDTO(1, 1, "Test1", "This is a review")
     }
 
 }
