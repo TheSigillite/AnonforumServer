@@ -3,10 +3,12 @@ package com.tijo.anonforum.domain.dto.review;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.io.Serializable;
 
 @Builder
+@Getter
 @ApiModel(description = "Model recenzji która będzie wyświetlana pod filmem")
 public class ReviewDTO implements Serializable {
     @ApiModelProperty(notes = "Id recenzji")

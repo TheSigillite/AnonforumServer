@@ -9,14 +9,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class URLregexp {
-    public static boolean VerifyURL(MovieDTO newMovie) {
+    public static boolean VerifyURL(String toverify) {
         try{
-            Pattern regex = Pattern.compile("((http|https|ftp)://)?((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+");
-            Matcher matcher = regex.matcher(newMovie.getCover());
+            Pattern regex = Pattern.compile("(http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png)");
+            Matcher matcher = regex.matcher(toverify);
             if(!matcher.find()) {
-                throw new URISyntaxException(newMovie.getCover(), "Not a valid url");
+                throw new URISyntaxException(toverify, "Not a valid image url");
             }
-            URL u = new URL(newMovie.getCover());
+            URL u = new URL(toverify);
             u.toURI();
         } catch (MalformedURLException | URISyntaxException e) {
             return false;

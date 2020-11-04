@@ -50,7 +50,7 @@ public class MovieServiceImpl implements MoviesService {
     @Override
     public ResponseDTO addMovie(MovieActionDTO newMovieDto) {
         MovieDTO movieDTO = newMovieDto.getMovieDTO();
-        if(!URLregexp.VerifyURL(movieDTO)){
+        if(!URLregexp.VerifyURL(movieDTO.getCover())){
             return new ResponseDTO(false,"Not a valid image link");
         }
         Optional<Movie> movie = Optional.ofNullable(movieRepository.findMovieByTitleAndDirectorAndPremiere(movieDTO.getTitle(), movieDTO.getDirector(), movieDTO.getPremiere()));
@@ -76,7 +76,7 @@ public class MovieServiceImpl implements MoviesService {
     @Override
     public ResponseDTO updateMovie(MovieActionDTO updateMovieDto) {
         MovieDTO updateMovie = updateMovieDto.getMovieDTO();
-        if(!URLregexp.VerifyURL(updateMovie)){
+        if(!URLregexp.VerifyURL(updateMovie.getCover())){
             return new ResponseDTO(false,"Not a valid image link");
         }
         Optional<User> user = Optional.ofNullable(userRepository.findUserByLoginAndPasswd(updateMovieDto.getLogin(), updateMovieDto.getPasswd()));

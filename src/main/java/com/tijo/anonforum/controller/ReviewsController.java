@@ -5,8 +5,11 @@ import com.tijo.anonforum.domain.dto.review.DeleteReviewDTO;
 import com.tijo.anonforum.domain.dto.review.NewReviewDTO;
 import com.tijo.anonforum.domain.dto.review.ReviewDTO;
 import com.tijo.anonforum.service.ReviewsService;
+import com.tijo.anonforum.service.impl.ReviewsServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +22,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/reviews")
 public class ReviewsController {
+    Logger logger = LoggerFactory.getLogger(ReviewsServiceImpl.class);
 
     private final ReviewsService reviewsService;
 
@@ -34,7 +38,9 @@ public class ReviewsController {
     public ResponseEntity<List<ReviewDTO>> getMovieReviews(
             @ApiParam(value = "Id filmu dla którego mają być zwrócone recenzje", required = true)
             @RequestParam(name = "movieid") Long movieid){
-        return new ResponseEntity<>(reviewsService.findReviewsForMovie(movieid), HttpStatus.OK);
+        List<ReviewDTO> sevs = reviewsService.findReviewsForMovie(movieid);
+        logger.info(sevs.toString());
+        return new ResponseEntity<>(sevs, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Dodaje nową recenzje", notes = "Metoda weryfikuje czy konto dodające recenzje istnieje",response = ResponseDTO.class)

@@ -19,6 +19,5 @@ public class MovieActionDTO implements Serializable {
     private MovieDTO movieDTO;
 
     public MovieActionDTO(){
-
     }
 }

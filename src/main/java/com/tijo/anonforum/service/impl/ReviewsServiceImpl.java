@@ -20,19 +20,16 @@ import java.util.stream.Collectors;
 @Service
 public class ReviewsServiceImpl implements ReviewsService {
 
-    public final TwoToOneMapper<List<ReviewDTO>,List<Review>,List<User>> reviewListMapper;
     public final TwoToOneMapper<ReviewDTO, Review, User> reviewMapper;
     public final TwoToOneMapper<Review, User, NewReviewDTO> newReviewMapper;
     public final ReviewRepository reviewRepository;
     public final UserRepository userRepository;
 
     @Autowired
-    public ReviewsServiceImpl(TwoToOneMapper<List<ReviewDTO>, List<Review>, List<User>> reviewListMapper
-            , TwoToOneMapper<ReviewDTO, Review, User> reviewMapper
+    public ReviewsServiceImpl(TwoToOneMapper<ReviewDTO, Review, User> reviewMapper
             , TwoToOneMapper<Review, User, NewReviewDTO> newReviewMapper
             , ReviewRepository reviewRepository
             , UserRepository userRepository) {
-        this.reviewListMapper = reviewListMapper;
         this.reviewMapper = reviewMapper;
         this.newReviewMapper = newReviewMapper;
         this.reviewRepository = reviewRepository;
