@@ -1,7 +1,7 @@
 package com.tijo.anonforum.service
 
 import com.tijo.anonforum.domain.dto.ResponseDTO
-import com.tijo.anonforum.domain.dto.review.DeleteReviewDTO
+
 import com.tijo.anonforum.domain.dto.review.NewReviewDTO
 import com.tijo.anonforum.domain.dto.review.ReviewDTO
 import com.tijo.anonforum.domain.entity.Review
@@ -70,48 +70,44 @@ class ReviewsServiceTest extends Specification{
 
     def "Should not delete review if user does not exist"(){
         given:
-            DeleteReviewDTO deleteReviewDTO = new DeleteReviewDTO()
-            deleteReviewDTO.setLogin("TestUser3")
-            deleteReviewDTO.setPasswd("TestPass3")
-            deleteReviewDTO.setRev_id(1)
+            String login  = "TestUser3"
+            String passwd = "TestPass3"
+            Long rev_id = 1
         when:
-            ResponseDTO out = reviewsService.deleteReview(deleteReviewDTO)
+            ResponseDTO out = reviewsService.deleteReview(login,passwd,rev_id)
         then:
             out == new ResponseDTO(false,"User does not exist")
     }
 
     def "Should not delete review when user is not the author and moderator"(){
         given:
-            DeleteReviewDTO deleteReviewDTO = new DeleteReviewDTO()
-            deleteReviewDTO.setLogin("TestUser1")
-            deleteReviewDTO.setPasswd("TestPass1")
-            deleteReviewDTO.setRev_id(2)
+            String login  = "TestUser1"
+            String passwd = "TestPass1"
+            Long rev_id = 2
         when:
-        ResponseDTO out = reviewsService.deleteReview(deleteReviewDTO)
+        ResponseDTO out = reviewsService.deleteReview(login,passwd,rev_id)
         then:
         out == new ResponseDTO(false,"You do not have permissions to delete this review")
     }
 
     def "Should delete review when user has moderator priviliges"(){
         given:
-            DeleteReviewDTO deleteReviewDTO = new DeleteReviewDTO()
-            deleteReviewDTO.setLogin("TestUser2")
-            deleteReviewDTO.setPasswd("TestPass2")
-            deleteReviewDTO.setRev_id(1)
+            String login  = "TestUser2"
+            String passwd = "TestPass2"
+            Long rev_id = 1
         when:
-            ResponseDTO out = reviewsService.deleteReview(deleteReviewDTO)
+            ResponseDTO out = reviewsService.deleteReview(login,passwd,rev_id)
         then:
             out == new ResponseDTO(true,"Review Deleted")
     }
 
     def "Should delete review when user is the author"(){
         given:
-            DeleteReviewDTO deleteReviewDTO = new DeleteReviewDTO()
-            deleteReviewDTO.setLogin("TestUser1")
-            deleteReviewDTO.setPasswd("TestPass1")
-            deleteReviewDTO.setRev_id(1)
+            String login  = "TestUser1"
+            String passwd = "TestPass1"
+            Long rev_id = 1
         when:
-            ResponseDTO out = reviewsService.deleteReview(deleteReviewDTO)
+            ResponseDTO out = reviewsService.deleteReview(login,passwd,rev_id)
         then:
             out == new ResponseDTO(true,"Review Deleted")
     }

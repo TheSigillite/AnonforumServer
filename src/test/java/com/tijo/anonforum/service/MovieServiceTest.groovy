@@ -170,36 +170,33 @@ class MovieServiceTest extends Specification{
 
     def "Should not delete movie when user does not exist"(){
         given:
-        def deleteMovie = new DeleteMovieDTO()
-        deleteMovie.setLogin("TestUser3")
-        deleteMovie.setPasswd("TestPass3")
-        deleteMovie.setMovie_id(2)
+        String login = "TestUser3"
+        String passwd = "TestPass3"
+        Long movie_id = 2
         when:
-        def response = movieService.deleteMovie(deleteMovie)
+        def response = movieService.deleteMovie(login,passwd,movie_id)
         then:
         response == new ResponseDTO(false,"User does not exist")
     }
 
     def "Should not delete movie when user does not have moderator privileges"(){
         given:
-        def deleteMovie = new DeleteMovieDTO()
-        deleteMovie.setLogin("TestUser1")
-        deleteMovie.setPasswd("TestPass1")
-        deleteMovie.setMovie_id(2)
+        String login = "TestUser1"
+        String passwd = "TestPass1"
+        Long movie_id = 2
         when:
-        def response = movieService.deleteMovie(deleteMovie)
+        def response = movieService.deleteMovie(login,passwd,movie_id)
         then:
         response == new ResponseDTO(false,"You do not have Moderator permissions")
     }
 
     def "Should delete movie when user is moderator"(){
         given:
-        def deleteMovie = new DeleteMovieDTO()
-        deleteMovie.setLogin("TestUser2")
-        deleteMovie.setPasswd("TestPass2")
-        deleteMovie.setMovie_id(2)
+        String login = "TestUser2"
+        String passwd = "TestPass2"
+        Long movie_id = 2
         when:
-        def response = movieService.deleteMovie(deleteMovie)
+        def response = movieService.deleteMovie(login,passwd,movie_id)
         then:
         response == new ResponseDTO(true,"Movie and reviews of that movie have been deleted")
     }

@@ -10,9 +10,11 @@ import java.util.List;
 public interface MoviesService {
     List<MovieDTO> findAll();
 
+    MovieDTO getOne(Long movie_id);
+
     ResponseDTO addMovie(MovieActionDTO newMovieDto);
 
     ResponseDTO updateMovie(MovieActionDTO updateMovieDto);
 
-    ResponseDTO deleteMovie(DeleteMovieDTO deleteMovieDto);
+    ResponseDTO deleteMovie(String login, String passwd , Long movie_id);
 }

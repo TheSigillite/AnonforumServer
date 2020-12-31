@@ -1,7 +1,6 @@
 package com.tijo.anonforum.controller;
 
 import com.tijo.anonforum.domain.dto.ResponseDTO;
-import com.tijo.anonforum.domain.dto.review.DeleteReviewDTO;
 import com.tijo.anonforum.domain.dto.review.NewReviewDTO;
 import com.tijo.anonforum.domain.dto.review.ReviewDTO;
 import com.tijo.anonforum.service.ReviewsService;
@@ -32,20 +31,9 @@ public class ReviewsController {
     }
 
 
-    @ApiOperation(value = "Zwraca Liste recenzji danego filmu")
-    @CrossOrigin
-    @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<ReviewDTO>> getMovieReviews(
-            @ApiParam(value = "Id filmu dla którego mają być zwrócone recenzje", required = true)
-            @RequestParam(name = "movieid") Long movieid){
-        List<ReviewDTO> sevs = reviewsService.findReviewsForMovie(movieid);
-        logger.info(sevs.toString());
-        return new ResponseEntity<>(sevs, HttpStatus.OK);
-    }
-
     @ApiOperation(value = "Dodaje nową recenzje", notes = "Metoda weryfikuje czy konto dodające recenzje istnieje",response = ResponseDTO.class)
     @CrossOrigin
-    @PostMapping(value = "/new", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ResponseDTO> newReview(
             @ApiParam(value = "Treść recenzji, id filmu i detale konta dodającego ocene", required = true)
             @RequestBody NewReviewDTO newReviewDto){
@@ -59,11 +47,15 @@ public class ReviewsController {
 
     @ApiOperation(value = "Usuwa recenzje", notes = "Usuwa pojedynczą recenzje danego filmu",response = ResponseDTO.class)
     @CrossOrigin
-    @DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping(value = "/{review_id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ResponseDTO> deleteReview(
-            @ApiParam(value = "Informacje o recenzji i kącie usuwającym recenzje")
-            @RequestBody DeleteReviewDTO deleteReviewDto){
-        ResponseDTO deleted = reviewsService.deleteReview(deleteReviewDto);
+            @ApiParam(value = "Id filmu który ma zostać usunięty", required = true)
+            @PathVariable Long review_id,
+            @ApiParam(value = "Login usuwającego")
+            @RequestHeader(value="Usr-Login") String login,
+            @ApiParam(value = "Hasło usuwającego")
+            @RequestHeader(value="Usr-Pass") String passwd){
+        ResponseDTO deleted = reviewsService.deleteReview(login,passwd,review_id);
         if(deleted.getWasSuccesful()){
             return new ResponseEntity<>(deleted,HttpStatus.OK);
         } else {

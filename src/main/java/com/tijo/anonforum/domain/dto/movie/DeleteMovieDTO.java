@@ -14,8 +14,6 @@ public class DeleteMovieDTO implements Serializable {
     private String login;
     @ApiModelProperty(notes = "Hasło usuwającego")
     private String passwd;
-    @ApiModelProperty(notes = "Id filmu do usunięcia")
-    private Long movie_id;
 
     public DeleteMovieDTO(){
 

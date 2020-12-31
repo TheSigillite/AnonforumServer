@@ -27,17 +27,20 @@ public class MovieServiceImpl implements MoviesService {
     private final ReviewRepository reviewRepository;
     private final OneToOneMapper<List<MovieDTO>,List<Movie>> movieListMapper;
     private final OneToOneMapper<Movie, MovieDTO> movieDTOMapper;
+    private final OneToOneMapper<MovieDTO, Movie> movieMapper;
 
     @Autowired
     public MovieServiceImpl(MovieRepository movieRepository
             , UserRepository userRepository
             , ReviewRepository reviewRepository
             , OneToOneMapper<List<MovieDTO>, List<Movie>> movieListMapper
+            , OneToOneMapper<MovieDTO, Movie> movieMapper
             , OneToOneMapper<Movie, MovieDTO> movieDTOMapper) {
         this.movieRepository = movieRepository;
         this.userRepository = userRepository;
         this.reviewRepository = reviewRepository;
         this.movieListMapper = movieListMapper;
+        this.movieMapper = movieMapper;
         this.movieDTOMapper = movieDTOMapper;
     }
 
@@ -45,6 +48,12 @@ public class MovieServiceImpl implements MoviesService {
     public List<MovieDTO> findAll() {
         List<Movie> movies = movieRepository.findAll(Sort.by(Sort.Direction.DESC, "premiere"));
         return movieListMapper.convert(movies);
+    }
+
+    @Override
+    public MovieDTO getOne(Long movie_id){
+        Movie movie = movieRepository.findMovieByMovie_id(movie_id);
+        return movieMapper.convert(movie);
     }
 
     @Override
@@ -96,14 +105,14 @@ public class MovieServiceImpl implements MoviesService {
     }
 
     @Override
-    public ResponseDTO deleteMovie(DeleteMovieDTO deleteMovieDto) {
-        Optional<User> user = Optional.ofNullable(userRepository.findUserByLoginAndPasswd(deleteMovieDto.getLogin(), deleteMovieDto.getPasswd()));
+    public ResponseDTO deleteMovie(String login, String passwd ,Long movie_id) {
+        Optional<User> user = Optional.ofNullable(userRepository.findUserByLoginAndPasswd(login,passwd));
         if(user.isEmpty()){
             return new ResponseDTO(false,"User does not exist");
         }
         if(user.get().getIs_adm()){
-            movieRepository.deleteByMovie_id(deleteMovieDto.getMovie_id());
-            reviewRepository.deleteByMovie_id(deleteMovieDto.getMovie_id());
+            movieRepository.deleteByMovie_id(movie_id);
+            reviewRepository.deleteByMovie_id(movie_id);
             return new ResponseDTO(true,"Movie and reviews of that movie have been deleted");
         }
         return new ResponseDTO(false,"You do not have Moderator permissions");

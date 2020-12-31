@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional()
 @Profile("!test")
 public interface UserRepository extends JpaRepository<User,Long>, CrudRepository<User,Long> {
-    @Query(value = "SELECT * FROM useraccounts u WHERE u.login = ?1 AND u.passwd = ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM useraccounts u WHERE u.login = :login AND u.passwd = :passwd", nativeQuery = true)
     User findUserByLoginAndPasswd(String login, String passwd);
     @Query(value = "SELECT * FROM useraccounts u WHERE u.acc_id = :acc_id", nativeQuery = true)
     User findUserByAcc_id(@Param("acc_id") Long acc_id);

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 public class LoginUserResponseMapper implements OneToOneMapper<LoginUserResponseDTO, User> {
     @Override
     public LoginUserResponseDTO convert(User user) {
+        System.out.println(user.toString());
         return LoginUserResponseDTO.builder().isAdmin(user.getIs_adm()).build();
     }
 }

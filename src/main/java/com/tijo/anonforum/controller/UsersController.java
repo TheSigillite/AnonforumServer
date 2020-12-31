@@ -30,13 +30,11 @@ public class UsersController {
             , notes = "Zwraca czy użytkownik jets moderatorem, jeśli nie istnieje zwraca błąd i pustą odpowiedź")
     @CrossOrigin
     @PostMapping(value = "/login",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> loginUser(
+    public ResponseEntity<LoginUserResponseDTO> loginUser(
             @ApiParam(value = "Login i hasło użytkownika",required = true)
             @RequestBody LoginUserDTO loginUserDto){
         LoginUserResponseDTO loginUser = usersService.loginUser(loginUserDto);
-        if(loginUser == null){
-            return new ResponseEntity<HttpEntity>(HttpEntity.EMPTY, HttpStatus.NOT_FOUND);
-        }
+        System.out.println(loginUser.toString());
         return new ResponseEntity<>(loginUser, HttpStatus.OK);
     }
 

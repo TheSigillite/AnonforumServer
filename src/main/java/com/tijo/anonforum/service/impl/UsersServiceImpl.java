@@ -30,6 +30,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public LoginUserResponseDTO loginUser(LoginUserDTO loginUser) {
         Optional<User> logingin = Optional.ofNullable(userRepository.findUserByLoginAndPasswd(loginUser.getLogin(),loginUser.getPasswd()));
+        System.out.println(logingin.toString());
         if(logingin.isEmpty()){
             return null;
         }

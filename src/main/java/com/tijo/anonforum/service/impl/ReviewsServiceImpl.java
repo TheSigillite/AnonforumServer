@@ -1,7 +1,6 @@
 package com.tijo.anonforum.service.impl;
 
 import com.tijo.anonforum.domain.dto.ResponseDTO;
-import com.tijo.anonforum.domain.dto.review.DeleteReviewDTO;
 import com.tijo.anonforum.domain.dto.review.NewReviewDTO;
 import com.tijo.anonforum.domain.dto.review.ReviewDTO;
 import com.tijo.anonforum.domain.entity.Review;
@@ -56,9 +55,9 @@ public class ReviewsServiceImpl implements ReviewsService {
     }
 
     @Override
-    public ResponseDTO deleteReview(DeleteReviewDTO deleteReviewDto) {
-        Optional<User> user = Optional.ofNullable(userRepository.findUserByLoginAndPasswd(deleteReviewDto.getLogin(), deleteReviewDto.getPasswd()));
-        Review review = reviewRepository.findByRev_id(deleteReviewDto.getRev_id());
+    public ResponseDTO deleteReview(String login, String passwd, Long rev_id) {
+        Optional<User> user = Optional.ofNullable(userRepository.findUserByLoginAndPasswd(login, passwd));
+        Review review = reviewRepository.findByRev_id(rev_id);
         if(user.isEmpty()){
             return new ResponseDTO(false,"User does not exist");
         }
