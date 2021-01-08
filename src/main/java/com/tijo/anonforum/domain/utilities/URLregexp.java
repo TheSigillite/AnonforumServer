@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class URLregexp {
     public static boolean VerifyURL(String toverify) {
         try{
-            Pattern regex = Pattern.compile("(http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png)");
+            Pattern regex = Pattern.compile("(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\\.(?:jpg|gif|png))(?:\\?([^#]*))?(?:#(.*))?");
             Matcher matcher = regex.matcher(toverify);
             if(!matcher.find()) {
                 throw new URISyntaxException(toverify, "Not a valid image url");
